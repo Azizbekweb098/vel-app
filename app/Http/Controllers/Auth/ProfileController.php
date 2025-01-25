@@ -42,14 +42,12 @@ class ProfileController extends Controller
 
     public function userupdate(Request $request)
     {
-        $user = Auth::user(); // Hozirgi autentifikatsiyalangan foydalanuvchi
-    
-        // Name va Email o'zgarishlarini tekshirish
+        $user = Auth::user(); 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
     
-        // Yangilash
-        $user->save(); // Foydalanuvchi malumotlarini bazada saqlash
+        
+        $user->save(); 
     
         return response()->json(['message' => 'Malumot Ozgartirildi']);
     }
@@ -71,7 +69,7 @@ class ProfileController extends Controller
             return response()->json(['message' => 'Parolni tasdiqlash xatoliklari mavjud.'], 400);
         }
     
-        // Yangi parolni saqlash
+    
         $user->password = Hash::make($request->new_password);
         $user->save();
     
