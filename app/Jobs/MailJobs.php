@@ -9,16 +9,17 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class MailCodeJobs implements ShouldQueue
+class MailJobs implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $email;
+   public $codetak;
+ 
 
-   public $email;
-   public $verificationCode;
-    public function __construct($email, $verificationCode)
+    public function __construct($codetak, $email)
     {
         $this->email = $email;
-        $this->verificationCode = $verificationCode;
+        $this->codetak = $codetak;
     }
 
     /**
@@ -26,8 +27,8 @@ class MailCodeJobs implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::raw("Tasqlash Codingiz: {$this->verificationCode}", function ($message){
- $message->to($this->email)->subject('Tasdiqlash Code');
-        }) ;
+       Mail::raw("Tasdiqlash Codingiz: {$this->codetak}", function ($message){
+        $message->to($this->email)->subject("Tasdiqlash Code");
+       });
     }
 }

@@ -15,4 +15,8 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class); // Foydalanuvchiga tegishli
     }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

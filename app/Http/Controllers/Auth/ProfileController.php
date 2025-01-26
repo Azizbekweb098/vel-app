@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProfileResourn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class ProfileController extends Controller
     {
         $profile = Auth::user()->profile;
     
-        return response()->json($profile);
+        return response()->json(new ProfileResourn($profile));
     }
 
     public function update(Request $request)

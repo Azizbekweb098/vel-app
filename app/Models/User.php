@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\CommitLike;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,5 +46,13 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class); // Faqat bitta profilga ega bo'ladi
+    }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+    public function commitLikes()
+    {
+        return $this->hasMany(CommitLike::class);
     }
 }
