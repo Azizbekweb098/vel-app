@@ -4,6 +4,7 @@ namespace App\Http\Controllers\post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Http\Resources\FrontentPost;
 use App\Models\Post;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class PostController extends Controller
   }
     public function index()
     {
-        return response()->json(auth()->user()->posts);
+      return response()->json(FrontentPost::collection(auth()->user()->posts));
     }
 
     /**
@@ -42,7 +43,11 @@ class PostController extends Controller
     public function show(string $id)
     {
         $reqesutData = Post::find($id);
-        return response()->json(['show' => $reqesutData]);
+        if(!$reqesutData)
+        {
+            return response()->json(['error' => 'Bunday Post Yoq']);
+        }
+   return response()->json(new FrontentPost($reqesutData));
     }
 
     /**
@@ -52,6 +57,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $this->authorize('update', $post);
+      
         $validated  = $request->validate([
             'name' => 'required|string|max:255',
             'content' => 'required|string',

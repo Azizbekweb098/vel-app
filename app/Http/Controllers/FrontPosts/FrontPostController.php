@@ -15,4 +15,14 @@ class FrontPostController extends Controller
 
         return response()->json(FrontentPost::collection($post));
     }
+    public function show($id)
+    {
+       $postshow = Post::find($id);
+       if(!$postshow)
+       {
+        return response()->json(['error' => 'Bunday Post  yoq']);
+       }
+
+       return response()->json(new FrontentPost($postshow));
+    }
 }
